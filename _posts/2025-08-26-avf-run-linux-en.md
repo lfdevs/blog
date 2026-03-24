@@ -122,7 +122,7 @@ You can use `chroot` to make simple modifications to `root_part`, such as changi
 
 ### 1\. Download u-boot.bin
 
-1. Using a web browser, go to the [aosp_u-boot-mainline Branch Grid](https://ci.android.com/builds/branches/aosp_u-boot-mainline/grid) website and select the latest build in the `u-boot_crosvm_aarch64` column.
+1. Using a web browser, go to the [aosp_u-boot-mainline Branch Grid](https://ci.android.com/builds/branches/aosp_u-boot-mainline/grid) website and select the latest build in the `boot_crosvm_aarch64` column.
 
    ![](/assets/img/posts/2025-08/0001.png)
 

@@ -122,7 +122,7 @@ tags: [avf, linux]
 
 ### 1\. 下载 u-boot.bin
 
-1. 使用浏览器前往 [aosp_u-boot-mainline Branch Grid](https://ci.android.com/builds/branches/aosp_u-boot-mainline/grid) 网站，在 `u-boot_crosvm_aarch64` 列选择最新的项目。
+1. 使用浏览器前往 [aosp_u-boot-mainline Branch Grid](https://ci.android.com/builds/branches/aosp_u-boot-mainline/grid) 网站，在 `boot_crosvm_aarch64` 列选择最新的项目。
 
    ![](/assets/img/posts/2025-08/0001.png)
 
