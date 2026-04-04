@@ -19,6 +19,12 @@ tags: [avf, linux, terminal, gpu, virgl]
 | KDE Plasma |  ❌不支持   | ✔支持 |
 
 ## 使用技巧
+
+> 修改配置文件`vm_config.json`的操作可能会导致虚拟机无法正常启动，**请在操作前备份虚拟机中的重要数据到 Android**。因为虚拟机一旦无法启动，只能执行重置操作，或者**在 Android 下使用 root 权限**撤销对`/data/data/com.android.virtualization.terminal/files/linux/vm_config.json`文件的修改。
+> 
+> 本节所有操作**仅在 Pixel 6 Pro 下进行了验证**，不同设备、不同系统版本的情况都可能有所不同。例如，Pixel 6 Pro 在`BP4A.251205.006`版本下可以正常启用 GPU 硬件加速，但在`CP1A.260305.018`版本下执行相同的操作后，虚拟机会无法启动。
+{: .prompt-danger }
+
 ### 调整虚拟机的运行内存
 
 为`droid`用户添加`sudo`权限后，或者使用`root`账户，在**虚拟机内**编辑`/mnt/internal/linux/vm_config.json`文件，修改`memory_mib`字段的值，默认为`4096`（即 4 GiB）。可以视宿主机（即 Android 设备）物理运行内存的大小适度调整。
