@@ -15,9 +15,9 @@ tags: [avf, linux]
 ## 系统需求
 
   * **操作系统**：Android 13 及以上
-  * **SoC**：Google Tensor、联发科天玑 9400、三星猎户座 2500 及更新的 SoC
+  * **SoC**：Google Tensor、联发科天玑 9400、三星猎户座 2500、小米玄戒 O3 及更新的 SoC
 
-> 由于高通的限制，骁龙 8 Elite 目前仅支持受保护的虚拟机 ，如 Microdroid，不能运行未经 Google 或 OEM 签名的自定义 Linux 虚拟机。但如果有 `root` 权限，您也可以参考 [polygraphene 的指南](https://github.com/polygraphene/gunyah-on-sd-guide)。您可以使用 `adb shell` 运行命令 `/apex/com.android.virt/bin/vm run-microdroid` 来确定您的 Android 设备是否支持运行自定义 Linux 虚拟机，运行 Microdroid 时可能需要通过 `adb -s localhost:8000 shell` 连接虚拟机的 Shell。本文所有操作步骤适用于大部分的 Linux 发行版，其他操作系统使用相应的命令即可。
+> 由于高通的限制，骁龙 8 Elite、8 Elite Gen 5 等处理器目前仅支持受保护的虚拟机 ，如 Microdroid，不能运行未经 Google 或 OEM 签名的自定义 Linux 虚拟机。但如果有 `root` 权限，您也可以参考 [polygraphene 的指南](https://github.com/polygraphene/gunyah-on-sd-guide)。您可以使用 `adb shell` 运行命令 `/apex/com.android.virt/bin/vm run-microdroid` 来确定您的 Android 设备是否支持运行自定义 Linux 虚拟机，运行 Microdroid 时可能需要通过 `adb -s localhost:8000 shell` 连接虚拟机的 Shell。本文所有操作步骤适用于大部分的 Linux 发行版，其他操作系统使用相应的命令即可。
 {: .prompt-info }
 
 ## 无头虚拟机
@@ -109,7 +109,7 @@ tags: [avf, linux]
 3. 在 `adb shell` 内执行以下命令来运行虚拟机。
 
    ```bash
-   /apex/com.android.virt/bin/vm run /data/local/tmp/vm_config.json
+   /apex/com.android.virt/bin/vm run --cpu-topology match_host /data/local/tmp/vm_config.json
    ```
 
 4. 在虚拟机的 Shell 内执行以下命令来关闭虚拟机。
@@ -199,7 +199,7 @@ mv disk.raw debian-13-nocloud-arm64.raw
 3. 在 `adb shell` 内执行以下命令来运行虚拟机。
 
    ```bash
-   /apex/com.android.virt/bin/vm run /data/local/tmp/u_boot_vm_config.json
+   /apex/com.android.virt/bin/vm run --cpu-topology match_host /data/local/tmp/u_boot_vm_config.json
    ```
 
 4. 在虚拟机的 Shell 内执行以下命令来关闭虚拟机。
@@ -211,6 +211,9 @@ mv disk.raw debian-13-nocloud-arm64.raw
 ## FAQ
 
 ### 虚拟机怎么连接网络？
+
+> 无需 root 权限的方法请参考[这条 GitHub 讨论](https://github.com/lfdevs/run-linux-on-android-guide/discussions/2)。下面介绍的是需要 root 权限的方法。
+{: .prompt-tip }
 
 由于 Android 的限制，创建虚拟网卡需要 root 权限。如果您的 Android 设备能够使用 root 权限，则可以使用 [setup_network.sh](https://github.com/lfdevs/run-linux-on-android-guide/blob/main/scripts/avf/setup_network.sh) 来为虚拟机创建一个虚拟网卡 `crosvm_tap`。
 
@@ -244,7 +247,7 @@ mv disk.raw debian-13-nocloud-arm64.raw
    systemctl restart systemd-networkd
    ```
 
-> 该方法参考了[这篇 AVF 文档](https://android.googlesource.com/platform/packages/modules/Virtualization/+/refs/tags/android-15.0.0_r5/docs/custom_vm.md)，如果您遇到了任何问题或有其他方案，欢迎在 [Issues](https://github.com/lfdevs/run-linux-on-android-guide/issues) 中一起讨论。
+> 该方法参考了[这篇 AVF 文档](https://cs.android.com/android/platform/superproject/+/android15-qpr1-release:packages/modules/Virtualization/docs/custom_vm.md)，如果您遇到了任何问题或有其他方案，欢迎在 [Issues](https://github.com/lfdevs/run-linux-on-android-guide/issues) 中一起讨论。
 {: .prompt-info }
 
 ### 虚拟机怎么使用桌面环境？
@@ -254,5 +257,5 @@ mv disk.raw debian-13-nocloud-arm64.raw
 ## 参考资料
 
 * [Android Virtualization Framework (AVF) overview](https://source.android.com/docs/core/virtualization)
-* [Virtualization - Android Code Search](https://cs.android.com/android/platform/superproject/main/+/main:packages/modules/Virtualization/)
-* [Custom VM](https://android.googlesource.com/platform/packages/modules/Virtualization/+/refs/tags/android-15.0.0_r5/docs/custom_vm.md)
+* [Virtualization](https://cs.android.com/android/platform/superproject/+/android-latest-release:packages/modules/Virtualization/)
+* [Custom VM](https://cs.android.com/android/platform/superproject/+/android15-qpr1-release:packages/modules/Virtualization/docs/custom_vm.md)

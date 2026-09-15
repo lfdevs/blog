@@ -15,9 +15,9 @@ The [Android Virtualization Framework (AVF)](https://source.android.com/docs/cor
 ## System Requirements
 
   * **Operating System**: Android 13 and later
-  * **SoC**: Google Tensor, MediaTek Dimensity 9400, Samsung Exynos 2500, and newer SoCs
+  * **SoC**: Google Tensor, MediaTek Dimensity 9400, Samsung Exynos 2500, Xiaomi XRING O3, and newer SoCs
 
-> Due to Qualcomm's restrictions, the Snapdragon 8 Elite currently only supports protected VMs like Microdroid and cannot run custom Linux VMs that are not signed by Google or the OEM. However, with `root` access, you can refer to [polygraphene's guide](https://github.com/polygraphene/gunyah-on-sd-guide). You can use `adb shell` to run the command `/apex/com.android.virt/bin/vm run-microdroid` to determine if your Android device supports running custom Linux VMs; you may need to connect to the VM's shell via `adb -s localhost:8000 shell` when running Microdroid. All steps in this article apply to most Linux distributions; use the corresponding commands for other operating systems.
+> Due to Qualcomm's restrictions, processors such as the Snapdragon 8 Elite and Snapdragon 8 Elite Gen 5 currently only support protected VMs like Microdroid and cannot run custom Linux VMs that are not signed by Google or the OEM. However, with `root` access, you can refer to [polygraphene's guide](https://github.com/polygraphene/gunyah-on-sd-guide). You can use `adb shell` to run the command `/apex/com.android.virt/bin/vm run-microdroid` to determine if your Android device supports running custom Linux VMs; you may need to connect to the VM's shell via `adb -s localhost:8000 shell` when running Microdroid. All steps in this article apply to most Linux distributions; use the corresponding commands for other operating systems.
 {: .prompt-info }
 
 ## Headless VMs
@@ -109,7 +109,7 @@ You can use `chroot` to make simple modifications to `root_part`, such as changi
 3. Execute the following command inside `adb shell` to run the VM.
 
    ```bash
-   /apex/com.android.virt/bin/vm run /data/local/tmp/vm_config.json
+   /apex/com.android.virt/bin/vm run --cpu-topology match_host /data/local/tmp/vm_config.json
    ```
 
 4. Execute the following command inside the VM's shell to shut it down.
@@ -199,7 +199,7 @@ mv disk.raw debian-13-nocloud-arm64.raw
 3. Execute the following command inside `adb shell` to run the VM.
 
    ```bash
-   /apex/com.android.virt/bin/vm run /data/local/tmp/u_boot_vm_config.json
+   /apex/com.android.virt/bin/vm run --cpu-topology match_host /data/local/tmp/u_boot_vm_config.json
    ```
 
 4. Execute the following command inside the VM's shell to shut it down.
@@ -211,6 +211,9 @@ mv disk.raw debian-13-nocloud-arm64.raw
 ## FAQ
 
 ### How does the VM connect to the network?
+
+> For a method that does not require `root` access, see [this GitHub discussion](https://github.com/lfdevs/run-linux-on-android-guide/discussions/2). The method described below requires `root` access.
+{: .prompt-tip }
 
 Due to Android's restrictions, creating a virtual network interface requires root access. If your Android device has root access, you can use [setup_network.sh](https://github.com/lfdevs/run-linux-on-android-guide/blob/main/scripts/avf/setup_network.sh) to create a virtual network interface named `crosvm_tap` for the VM.
 
@@ -244,7 +247,7 @@ Due to Android's restrictions, creating a virtual network interface requires roo
    systemctl restart systemd-networkd
    ```
 
-> This method is based on [this AVF document](https://android.googlesource.com/platform/packages/modules/Virtualization/+/refs/tags/android-15.0.0_r5/docs/custom_vm.md), and if you encounter any issues or have other solutions, feel free to discuss them in the [Issues](https://github.com/lfdevs/run-linux-on-android-guide/issues).
+> This method is based on [this AVF document](https://cs.android.com/android/platform/superproject/+/android15-qpr1-release:packages/modules/Virtualization/docs/custom_vm.md), and if you encounter any issues or have other solutions, feel free to discuss them in the [Issues](https://github.com/lfdevs/run-linux-on-android-guide/issues).
 {: .prompt-info }
 
 ### How to use a desktop environment in the VM?
@@ -254,5 +257,5 @@ Due to Android's restrictions, both port forwarding and vsock communication betw
 ## References
 
   * [Android Virtualization Framework (AVF) overview](https://source.android.com/docs/core/virtualization)
-  * [Virtualization - Android Code Search](https://cs.android.com/android/platform/superproject/main/+/main:packages/modules/Virtualization/)
-  * [Custom VM](https://android.googlesource.com/platform/packages/modules/Virtualization/+/refs/tags/android-15.0.0_r5/docs/custom_vm.md)
+  * [Virtualization](https://cs.android.com/android/platform/superproject/+/android-latest-release:packages/modules/Virtualization/)
+  * [Custom VM](https://cs.android.com/android/platform/superproject/+/android15-qpr1-release:packages/modules/Virtualization/docs/custom_vm.md)
