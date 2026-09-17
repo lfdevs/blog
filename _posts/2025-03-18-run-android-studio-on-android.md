@@ -46,7 +46,7 @@ tar -zxvf ./android-studio-2024.2.2.15-linux.tar.gz -C ~/Android/
 
 ```bash
 tar -zxvf ./jbr_jcef-21.0.5-linux-aarch64-b750.29.tar.gz
-cp -f ./jbr_jcef-21.0.5-linux-aarch64-b750.29 ~/Android/android-studio/jbr/
+cp -rf ./jbr_jcef-21.0.5-linux-aarch64-b750.29 ~/Android/android-studio/jbr/
 ```
 
 添加相关的环境变量。编辑 `~/.profile` 文件，在文件末尾新增一行，添加如下的配置。
